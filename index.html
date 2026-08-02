@@ -1,1 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Protocol</title>
 
+<style>
+body {
+    margin: 0;
+    background: black;
+    color: #00ff66;
+    font-family: "Courier New", monospace;
+    text-align: center;
+    overflow: hidden;
+}
+
+#terminal {
+    margin-top: 15vh;
+    font-size: 22px;
+    padding: 20px;
+}
+
+button {
+    background: #00ff66;
+    color: black;
+    border: none;
+    padding: 15px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background: white;
+}
+
+#photo {
+    display: none;
+    width: 300px;
+    max-width: 85%;
+    border-radius: 20px;
+    margin-top: 20px;
+    animation: glitch 0.4s infinite;
+    box-shadow: 0 0 25px #00ff66;
+}
+
+.glitch {
+    animation: shake 0.3s infinite;
+}
+
+@keyframes glitch {
+    0% {
+        transform: translate(0);
+    }
+    25% {
+        transform: translate(8px,-4px);
+    }
+    50% {
+        transform: translate(-8px,4px);
+    }
+    100% {
+        transform: translate(0);
+    }
+}
+
+@keyframes shake {
+    0% {filter:hue-rotate(0deg);}
+    50% {filter:hue-rotate(90deg);}
+    100% {filter:hue-rotate(0deg);}
+}
+</style>
+
+</head>
+
+<body>
+
+<audio id="music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div id="terminal">
+
+<button onclick="start()">ACCESS FILE</button>
+
+<p id="text"></p>
+
+<img id="photo" src="herphoto.jpg">
+
+</div>
+
+
+<script>
+
+function start(){
+
+    document.getElementById("music").play();
+
+    let text = document.getElementById("text");
+
+    let lines = [
+        "BOOTING SYSTEM...",
+        "SCANNING DATABASE...",
+        "SEARCHING SUBJECT...",
+        "FACE RECOGNITION IN PROGRESS...",
+        "",
+        "✓ SUBJECT FOUND",
+        "",
+        "NAME: GANDU",
+        "STATUS: BEST TWIN"
+    ];
+
+    let i = 0;
+
+    let scan = setInterval(function(){
+
+        text.innerHTML += lines[i] + "<br>";
+
+        i++;
+
+        if(i >= lines.length){
+
+            clearInterval(scan);
+
+            setTimeout(function(){
+
+                document.body.classList.add("glitch");
+
+                text.innerHTML += 
+                "<br>⚠ GLITCH TRANSITION ⚠<br><br>" +
+                "🐺 SYSTEM VOICE DETECTED...<br><br>" +
+                "Luv you twin ❤️";
+
+                document.getElementById("photo").style.display = "inline-block";
+
+            },1500);
+
+        }
+
+    },800);
+
+}
+
+</script>
+
+</body>
+</html>
