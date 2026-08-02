@@ -12,209 +12,192 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 *{
-    box-sizing:border-box;
+box-sizing:border-box;
 }
 
 body{
-    margin:0;
-    height:100vh;
-    background:#111;
-    color:white;
-    font-family:'Press Start 2P', monospace;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    overflow:hidden;
-}
 
+margin:0;
+height:100vh;
 
-/* CRT SCREEN EFFECT */
+background:#05051a;
 
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    background:
-    repeating-linear-gradient(
-        0deg,
-        rgba(255,255,255,0.05),
-        rgba(255,255,255,0.05) 1px,
-        transparent 2px,
-        transparent 4px
-    );
-    pointer-events:none;
-}
+display:flex;
+justify-content:center;
+align-items:center;
 
+font-family:'Press Start 2P',monospace;
 
-/* GAME WINDOW */
+color:white;
 
-#game{
-
-    width:95%;
-    max-width:500px;
-    min-height:650px;
-
-    background:#000;
-    border:6px solid #fff;
-
-    box-shadow:
-    0 0 20px #00ffff,
-    inset 0 0 30px #222;
-
-    padding:25px;
-
-    text-align:center;
-
-    position:relative;
+overflow:hidden;
 
 }
 
 
-/* TITLE */
+body::after{
+
+content:"";
+
+position:fixed;
+inset:0;
+
+background:
+repeating-linear-gradient(
+0deg,
+rgba(255,255,255,.05),
+rgba(255,255,255,.05) 2px,
+transparent 2px,
+transparent 4px
+);
+
+pointer-events:none;
+
+}
+
+
+#console{
+
+width:95%;
+max-width:600px;
+
+height:90vh;
+
+background:#101040;
+
+border:8px solid white;
+
+box-shadow:8px 8px #000;
+
+position:relative;
+
+overflow:hidden;
+
+padding:20px;
+
+text-align:center;
+
+}
+
+
+
+/* STARS */
+
+.star{
+
+position:absolute;
+
+width:5px;
+height:5px;
+
+background:white;
+
+animation:blink 2s infinite;
+
+}
+
+
+@keyframes blink{
+
+50%{
+
+opacity:.3;
+
+}
+
+}
+
+
+
+/* MOON */
+
+.moon{
+
+position:absolute;
+
+right:40px;
+top:40px;
+
+width:45px;
+height:45px;
+
+background:#fff3a0;
+
+border-radius:50%;
+
+}
+
+
+
 
 .title{
 
-    color:#00ffff;
-    font-size:22px;
-    line-height:1.5;
+margin-top:60px;
 
-    animation:flicker 2s infinite;
+color:#ffd83d;
 
-}
+font-size:22px;
 
+line-height:1.8;
 
-@keyframes flicker{
-
-0%,100%{
-opacity:1;
-}
-
-50%{
-opacity:.7;
-}
+text-shadow:4px 4px #7a4b00;
 
 }
 
 
-/* MENU BUTTONS */
 
 button{
 
-    width:90%;
-    margin:12px;
+width:85%;
 
-    padding:15px;
+margin:15px auto;
 
-    background:#111;
+padding:15px;
 
-    color:white;
+display:block;
 
-    border:3px solid white;
+background:#b52b2b;
 
-    font-family:inherit;
+color:white;
 
-    font-size:12px;
+border:5px solid white;
 
-    cursor:pointer;
+font-family:inherit;
 
-    transition:.2s;
+font-size:12px;
 
-}
-
-
-button:hover{
-
-    background:white;
-    color:black;
-
-    transform:scale(1.05);
+box-shadow:5px 5px black;
 
 }
 
 
-/* SCREENS */
+button:active{
+
+transform:translate(4px,4px);
+
+box-shadow:1px 1px black;
+
+}
+
+
 
 .screen{
 
-    display:none;
+display:none;
 
 }
 
 
 .active{
 
-    display:block;
+display:block;
 
 }
 
 
-/* START SCREEN */
+.blink{
 
-#startScreen{
-
-    display:block;
-
-}
-
-
-/* CHARACTER CARD */
-
-
-.card{
-
-    border:4px solid #00ffff;
-
-    padding:15px;
-
-    margin-top:20px;
-
-}
-
-
-#characterPhoto{
-
-    width:220px;
-
-    height:220px;
-
-    object-fit:cover;
-
-    border:4px solid white;
-
-    image-rendering:auto;
-
-}
-
-
-.stats{
-
-    margin-top:15px;
-
-    line-height:2;
-
-    font-size:12px;
-
-}
-
-
-/* WARNING */
-
-.warning{
-
-    color:#ff3333;
-
-    animation:flicker 1s infinite;
-
-}
-
-
-/* MESSAGE */
-
-.final{
-
-    color:#ffff00;
-
-    line-height:2;
+animation:blink 1s infinite;
 
 }
 
@@ -227,26 +210,51 @@ button:hover{
 <body>
 
 
-<div id="game">
+<div id="console">
+
+
+<div class="moon"></div>
+
+
+<div class="star" style="left:10%;top:20%"></div>
+
+<div class="star" style="left:25%;top:35%"></div>
+
+<div class="star" style="left:45%;top:15%"></div>
+
+<div class="star" style="left:70%;top:25%"></div>
+
+<div class="star" style="left:85%;top:45%"></div>
+
 
 
 <div class="title">
-🎮 TWIN QUEST 🎮
+
+TWIN QUEST
+
+<br>
+
+WORLD OF MEMORIES
+
 </div>
 
 
 
-<div id="startScreen" class="screen active">
 
-<br><br>
+<div id="start" class="screen active">
 
-<p>
-INSERT COIN
+
+<p class="blink">
+
+PRESS START
+
 </p>
 
 
 <button onclick="startGame()">
-▶ PRESS START
+    
+START GAME
+    
 </button>
 
 
@@ -255,115 +263,104 @@ INSERT COIN
 
 
 
-<div id="menuScreen" class="screen">
+<div id="menu" class="screen">
+
 
 <p>
+
 MAIN MENU
+
 </p>
 
 
-<button onclick="selectCharacter()">
-🎭 SELECT CHARACTER
+<button onclick="playGame()">
+    
+START ADVENTURE
+    
 </button>
 
 
-<button onclick="pauseGame()">
-⏸ PAUSE
+<button onclick="character()">
+    
+CHARACTER
+    
+</button>
+
+
+<button onclick="inventory()">
+    
+INVENTORY
+    
 </button>
 
 
 <button onclick="exitGame()">
-🚪 EXIT
+    
+EXIT
+    
 </button>
 
 
 </div>
+    
 
 
 
-
-
-<div id="characterScreen" class="screen">
+<div id="character" class="screen">
 
 
 <p>
+
 CHARACTER SELECT
+
 </p>
 
 
-<div class="card">
+<div style="
+background:#202020;
+border:5px solid #ffd83d;
+padding:15px;
+">
 
 
-<img id="characterPhoto" src="./herphoto.jpg">
-
-
-<div class="stats">
-
-NAME: GANDU<br>
-
-CLASS: BEST TWIN<br>
-
-LEVEL: LEGENDARY<br>
-
-ABILITY: CHAOS +100 ❤️
-
-</div>
-
-
-</div>
-
-
-<button onclick="beginQuest()">
-⭐ SELECT
-</button>
-
-
-</div>
-
-
-
-
-
-<div id="pauseScreen" class="screen">
-
-<p>
-⏸ GAME PAUSED
-</p>
-
-
-<button onclick="resumeGame()">
-▶ RESUME
-</button>
-
-
-</div>
-
-
-
-
-
-<div id="exitScreen" class="screen">
-
-<p class="warning">
-⚠ WARNING ⚠
-</p>
+<img 
+src="./herphoto.jpg"
+style="
+width:180px;
+height:180px;
+object-fit:cover;
+border:5px solid white;
+">
 
 
 <p>
-ARE YOU SURE?
+
+NAME:
+
+GANDU
+
 <br><br>
-LEAVING WILL DELETE
-TWIN MEMORIES
+
+TITLE:
+
+BEST TWIN
+
+<br><br>
+
+LEVEL:
+
+99
+
 </p>
 
 
-<button onclick="returnGame()">
-❤️ STAY
-</button>
+</div>
 
 
-<button onclick="fakeExit()">
-EXIT ANYWAY
+<button>
+
+SELECT
+
 </button>
 
 
@@ -372,25 +369,170 @@ EXIT ANYWAY
 
 
 
-<div id="finalScreen" class="screen">
 
 
-<p class="final">
 
-QUEST COMPLETE ⭐
+<div id="inventory" class="screen">
+
+
+<p>
+
+INVENTORY
+
+</p>
+
+
+<div style="
+background:#222;
+border:4px solid white;
+padding:15px;
+">
+
+
+<p>
+
+MEMORY CARD
 
 <br><br>
 
-PLAYER GANDU JOINED
+LOCKED ITEMS:
 
-<br><br>
+<br>
 
-🐺 Luv you twin ❤️
+??? 
+
+<br>
+
+???
 
 </p>
 
 
 </div>
+
+
+<button>
+
+BACK
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+<div id="game" class="screen">
+
+
+<div style="
+background:black;
+padding:10px;
+font-size:10px;
+display:flex;
+justify-content:space-around;
+">
+
+
+<span>
+SCORE 000000
+</span>
+
+
+<span>
+COINS 000
+</span>
+
+
+<span>
+LIVES 03
+</span>
+
+
+</div>
+
+
+
+
+
+<div style="
+height:300px;
+margin-top:10px;
+border:5px solid black;
+background:
+linear-gradient(
+#4b8cff 0%,
+#4b8cff 70%,
+#37a537 70%
+);
+position:relative;
+">
+
+
+<img 
+src="./herphoto.jpg"
+style="
+width:60px;
+height:60px;
+object-fit:cover;
+position:absolute;
+bottom:40px;
+left:50px;
+border:4px solid white;
+">
+
+
+</div>
+
+
+
+<p>
+
+WORLD 1-1
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="exit" class="screen">
+
+
+<h2>
+
+WARNING
+
+</h2>
+
+
+<p>
+
+ARE YOU SURE YOU WANT TO EXIT?
+
+</p>
+
+
+<button onclick="backMenu()">
+    
+RETURN
+    
+</button>
+
+
+</div>
+
+
 
 
 
@@ -402,64 +544,43 @@ PLAYER GANDU JOINED
 
 
 
-</div>
 
 
-</body>
 <script>
 
 
-let currentScreen = "startScreen";
-
 let music = document.getElementById("music");
 
-let paused = false;
 
+function showScreen(screen){
 
+    document.querySelectorAll(".screen").forEach(function(item){
 
-function showScreen(id){
-
-    document.querySelectorAll(".screen").forEach(screen=>{
-
-        screen.classList.remove("active");
-
-        screen.style.display="none";
+        item.classList.remove("active");
 
     });
 
 
-    let selected = document.getElementById(id);
-
-    selected.classList.add("active");
-
-    selected.style.display="block";
-
-
-    currentScreen=id;
+    document.getElementById(screen).classList.add("active");
 
 }
 
 
 
 
-// START GAME
 
 function startGame(){
 
     music.volume = 0.5;
 
-    music.play().catch(()=>{
+    music.play().catch(function(){
 
-        console.log("Audio waiting for interaction");
+        console.log("Music waiting");
 
     });
 
 
-    setTimeout(()=>{
-
-        showScreen("menuScreen");
-
-    },500);
+    showScreen("menu");
 
 }
 
@@ -467,11 +588,9 @@ function startGame(){
 
 
 
-// CHARACTER SELECT
+function playGame(){
 
-function selectCharacter(){
-
-    showScreen("characterScreen");
+    showScreen("game");
 
 }
 
@@ -479,11 +598,9 @@ function selectCharacter(){
 
 
 
-// START QUEST
+function character(){
 
-function beginQuest(){
-
-    showScreen("finalScreen");
+    showScreen("character");
 
 }
 
@@ -491,43 +608,19 @@ function beginQuest(){
 
 
 
-// PAUSE
+function inventory(){
 
-function pauseGame(){
-
-    paused=true;
-
-    music.pause();
-
-    showScreen("pauseScreen");
+    showScreen("inventory");
 
 }
 
 
 
 
-
-// RESUME
-
-function resumeGame(){
-
-    paused=false;
-
-    music.play();
-
-    showScreen("menuScreen");
-
-}
-
-
-
-
-
-// EXIT WARNING
 
 function exitGame(){
 
-    showScreen("exitScreen");
+    showScreen("exit");
 
 }
 
@@ -535,53 +628,20 @@ function exitGame(){
 
 
 
-// STAY BUTTON
+function backMenu(){
 
-function returnGame(){
-
-    showScreen("menuScreen");
+    showScreen("menu");
 
 }
 
-
-
-
-
-// FUNNY EXIT
-
-function fakeExit(){
-
-    document.querySelector("#exitScreen").innerHTML=
-
-    `
-
-    <p class="warning">
-
-    ERROR 404
-
-    </p>
-
-
-    <p>
-
-    YOU CANNOT LEAVE 😈
-
-    <br><br>
-
-    TWIN QUEST IS TOO POWERFUL
-
-    </p>
-
-
-    <button onclick="returnGame()">
-
-    RETURN ❤️
-
-    </button>
-
-    `;
-
-}
 
 </script>
+
+
+
+</div>
+
+
+</body>
+
 </html>
