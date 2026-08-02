@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure Birthday Protocol</title>
+
+<style>
+body{
+    margin:0;
+    background:#000;
+    color:#00ff66;
+    font-family:monospace;
+    overflow:hidden;
+}
+
+#terminal{
+    padding:20px;
+    white-space:pre-wrap;
+    font-size:18px;
+}
+
+.cursor{
+    animation:blink .8s infinite;
+}
+
+@keyframes blink{
+50%{opacity:0;}
+}
+
+button{
+    display:none;
+    background:#00ff66;
+    color:black;
+    border:none;
+    padding:15px 30px;
+    font-size:18px;
+    cursor:pointer;
+    margin:20px;
+    border-radius:8px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="terminal"></div>
+
+<center>
+<button id="continueBtn">CONTINUE</button>
+</center>
+
+<script>
+
+const text=[
+"Initializing Secure Birthday Protocol...",
+"",
+"Scanning Device...",
+"██████████████ 100%",
+"",
+"Accessing Birthday Database...",
+"Searching Memories...",
+"",
+"✓ Identity Verified",
+"",
+"⚠ We've detected it's your birthday."
+];
+
+let i=0;
+
+function type(){
+
+if(i<text.length){
+
+document.getElementById("terminal").innerHTML+=text[i]+"<br>";
+
+i++;
+
+setTimeout(type,700);
+
+}else{
+
+document.getElementById("continueBtn").style.display="inline-block";
+
+}
+
+}
+
+type();
+
+</script>
+
+</body>
+</html>
