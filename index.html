@@ -18,7 +18,7 @@ body{
 margin:0;
 height:100vh;
 
-background:#090923;
+background:#080820;
 
 display:flex;
 justify-content:center;
@@ -56,7 +56,11 @@ text-align:center;
 
 
 
-#game:after{
+
+
+/* CRT EFFECT */
+
+#game::after{
 
 content:"";
 
@@ -70,9 +74,9 @@ repeating-linear-gradient(
 
 0deg,
 
-rgba(255,255,255,.05),
+rgba(255,255,255,0.05),
 
-rgba(255,255,255,.05) 2px,
+rgba(255,255,255,0.05) 2px,
 
 transparent 2px,
 
@@ -86,6 +90,8 @@ pointer-events:none;
 
 
 
+
+
 .sky{
 
 position:absolute;
@@ -96,13 +102,14 @@ background:
 
 linear-gradient(
 
-#16165c,
+#14145a,
 
-#080820
+#07071c
 
 );
 
 }
+
 
 
 
@@ -117,12 +124,13 @@ height:5px;
 
 background:white;
 
-animation:shine 2s infinite;
+animation:blink 2s infinite;
 
 }
 
 
-@keyframes shine{
+
+@keyframes blink{
 
 50%{
 
@@ -140,15 +148,15 @@ opacity:.2;
 
 position:absolute;
 
-right:45px;
+top:40px;
 
-top:45px;
+right:50px;
 
-width:55px;
+width:60px;
 
-height:55px;
+height:60px;
 
-background:#fff0a8;
+background:#fff1a8;
 
 border-radius:50%;
 
@@ -158,17 +166,18 @@ border-radius:50%;
 
 
 
+
 .cloud{
 
 position:absolute;
 
-height:20px;
+width:100px;
 
-width:90px;
+height:25px;
 
 background:#7777aa;
 
-animation:cloudMove 18s linear infinite;
+animation:moveCloud 18s linear infinite;
 
 }
 
@@ -194,7 +203,8 @@ top:-15px;
 
 
 
-@keyframes cloudMove{
+
+@keyframes moveCloud{
 
 from{
 
@@ -214,11 +224,12 @@ left:700px;
 
 
 
+
 .title{
 
 position:relative;
 
-margin-top:90px;
+margin-top:120px;
 
 font-size:32px;
 
@@ -231,6 +242,8 @@ text-shadow:
 line-height:1.5;
 
 }
+
+
 
 
 
@@ -247,14 +260,13 @@ font-size:14px;
 
 
 
-
 button{
 
 position:relative;
 
-margin-top:40px;
+margin-top:50px;
 
-padding:18px 35px;
+padding:18px 40px;
 
 background:#b52b2b;
 
@@ -284,6 +296,8 @@ box-shadow:1px 1px #000;
 
 
 
+
+
 </style>
 
 </head>
@@ -299,13 +313,9 @@ box-shadow:1px 1px #000;
 
 
 <div class="star" style="left:10%;top:20%"></div>
-
 <div class="star" style="left:25%;top:35%"></div>
-
 <div class="star" style="left:45%;top:15%"></div>
-
 <div class="star" style="left:70%;top:25%"></div>
-
 <div class="star" style="left:85%;top:40%"></div>
 
 
@@ -313,8 +323,7 @@ box-shadow:1px 1px #000;
 
 
 <div class="cloud" style="top:150px"></div>
-
-<div class="cloud" style="top:230px;animation-delay:5s"></div>
+<div class="cloud" style="top:240px;animation-delay:5s"></div>
 
 
 
@@ -339,14 +348,11 @@ A RETRO ADVENTURE
 
 
 
-
-<button onclick="startGame()">
+<button id="startButton">
 
 START GAME
 
 </button>
-
-
 
 
 
@@ -358,7 +364,7 @@ START GAME
 <style>
 
 
-#worldScreen{
+#world{
 
 display:none;
 
@@ -369,13 +375,141 @@ inset:0;
 background:
 
 linear-gradient(
+
 #4b8cff 0%,
-#8ed6ff 55%,
-#5dbb63 55%,
-#327a36 100%
+
+#8ed6ff 45%,
+
+#55b95a 45%,
+
+#328035 100%
+
 );
 
+overflow:hidden;
+
 }
+
+
+
+
+
+.gameCloud{
+
+position:absolute;
+
+width:90px;
+
+height:25px;
+
+background:white;
+
+top:80px;
+
+animation:cloudMove 12s linear infinite;
+
+}
+
+
+
+
+.ground{
+
+position:absolute;
+
+bottom:0;
+
+height:70px;
+
+width:100%;
+
+background:#8b5a2b;
+
+border-top:6px solid #3d7a32;
+
+}
+
+
+
+
+
+#player{
+
+position:absolute;
+
+bottom:80px;
+
+left:80px;
+
+width:50px;
+
+height:50px;
+
+background:#ffd83d;
+
+border:5px solid black;
+
+}
+
+
+
+
+
+.enemy{
+
+position:absolute;
+
+bottom:70px;
+
+width:45px;
+
+height:45px;
+
+background:#b52b2b;
+
+border:5px solid black;
+
+}
+
+
+
+
+
+.obstacle{
+
+position:absolute;
+
+bottom:70px;
+
+width:50px;
+
+height:50px;
+
+background:#555;
+
+border:5px solid black;
+
+}
+
+
+
+
+
+.beam{
+
+position:absolute;
+
+width:50px;
+
+height:10px;
+
+background:white;
+
+border:3px solid #00ffff;
+
+}
+
+
 
 
 
@@ -389,89 +523,18 @@ left:10px;
 
 right:10px;
 
-background:#111;
+background:black;
 
 padding:10px;
-
-font-size:12px;
 
 display:flex;
 
 justify-content:space-between;
 
-}
-
-
-
-#player{
-
-position:absolute;
-
-width:50px;
-
-height:50px;
-
-background:#ffd83d;
-
-border:4px solid #000;
-
-bottom:90px;
-
-left:80px;
+font-size:14px;
 
 }
 
-
-
-.obstacle{
-
-position:absolute;
-
-bottom:70px;
-
-width:45px;
-
-height:45px;
-
-background:#654321;
-
-border:4px solid black;
-
-}
-
-
-
-.enemyGame{
-
-position:absolute;
-
-bottom:90px;
-
-width:45px;
-
-height:45px;
-
-background:#b52b2b;
-
-border:4px solid black;
-
-}
-
-
-
-.beam{
-
-position:absolute;
-
-width:45px;
-
-height:8px;
-
-background:white;
-
-border:2px solid #00ffff;
-
-}
 
 
 
@@ -480,7 +543,7 @@ border:2px solid #00ffff;
 
 position:absolute;
 
-bottom:15px;
+bottom:10px;
 
 left:0;
 
@@ -500,11 +563,16 @@ margin:0;
 
 padding:12px;
 
-font-size:14px;
+font-size:12px;
 
 background:#222;
 
+border:3px solid white;
+
+box-shadow:3px 3px black;
+
 }
+
 
 
 </style>
@@ -513,7 +581,9 @@ background:#222;
 
 
 
-<div id="worldScreen">
+
+<div id="world">
+
 
 
 <div class="hud">
@@ -525,14 +595,19 @@ SCORE 0000
 </span>
 
 
-<span id="lives">
+<span>
 
 LIVES 03
 
 </span>
 
-
 </div>
+
+
+
+
+
+<div class="gameCloud"></div>
 
 
 
@@ -542,15 +617,20 @@ LIVES 03
 
 <div class="obstacle" style="left:300px"></div>
 
-<div class="obstacle" style="left:520px"></div>
+<div class="obstacle" style="left:600px"></div>
 
 
 
-<div class="enemyGame" style="left:420px"></div>
 
-<div class="enemyGame" style="left:650px"></div>
+<div class="enemy" style="left:450px"></div>
+
+<div class="enemy" style="left:750px"></div>
 
 
+
+
+
+<div class="ground"></div>
 
 
 
@@ -558,28 +638,28 @@ LIVES 03
 <div class="controls">
 
 
-<button onclick="moveLeft()">
+<button id="left">
 
 LEFT
 
 </button>
 
 
-<button onclick="moveForward()">
+<button id="forward">
 
 FORWARD
 
 </button>
 
 
-<button onclick="jump()">
+<button id="jump">
 
 JUMP
 
 </button>
 
 
-<button onclick="attack()">
+<button id="attack">
 
 ATTACK
 
@@ -596,64 +676,64 @@ ATTACK
 
 
 
-
 <script>
 
 
 let player=document.getElementById("player");
 
+let x=80;
 
-let position=80;
+let y=80;
 
 let jumping=false;
 
 
-function startGame(){
+document.getElementById("startButton").onclick=function(){
 
 
 document.getElementById("music").play();
 
 
-document.querySelector("#game").style.display="none";
+document.getElementById("game").style.display="none";
 
 
-document.getElementById("worldScreen").style.display="block";
+document.getElementById("world").style.display="block";
 
 
-}
-
-
-
-
-
-
-function moveLeft(){
-
-position-=25;
-
-player.style.left=position+"px";
-
-}
+};
 
 
 
 
-function moveForward(){
+document.getElementById("forward").onclick=function(){
 
-position+=25;
+x+=25;
 
-player.style.left=position+"px";
+player.style.left=x+"px";
 
-}
+};
 
 
 
 
 
-function jump(){
+document.getElementById("left").onclick=function(){
+
+x-=25;
+
+player.style.left=x+"px";
+
+};
 
 
-if(jumping) return;
+
+
+
+
+document.getElementById("jump").onclick=function(){
+
+
+if(jumping)return;
 
 
 jumping=true;
@@ -662,20 +742,20 @@ jumping=true;
 let up=0;
 
 
-let jumpInterval=setInterval(()=>{
+let timer=setInterval(()=>{
 
 
 up+=10;
 
 
-player.style.bottom=(90+up)+"px";
+player.style.bottom=(80+up)+"px";
 
 
 
 if(up>=100){
 
 
-clearInterval(jumpInterval);
+clearInterval(timer);
 
 
 
@@ -685,17 +765,16 @@ let down=setInterval(()=>{
 up-=10;
 
 
-player.style.bottom=(90+up)+"px";
+player.style.bottom=(80+up)+"px";
+
 
 
 if(up<=0){
-
 
 clearInterval(down);
 
 jumping=false;
 
-
 }
 
 
@@ -711,14 +790,15 @@ jumping=false;
 
 
 
-}
+};
 
 
 
 
 
 
-function attack(){
+
+document.getElementById("attack").onclick=function(){
 
 
 let beam=document.createElement("div");
@@ -727,33 +807,30 @@ let beam=document.createElement("div");
 beam.className="beam";
 
 
-beam.style.left=(position+50)+"px";
-
+beam.style.left=(x+50)+"px";
 
 beam.style.bottom="120px";
 
 
-document.getElementById("worldScreen").appendChild(beam);
+document.getElementById("world").appendChild(beam);
 
 
 
 let move=setInterval(()=>{
 
 
-let x=parseInt(beam.style.left);
+let pos=parseInt(beam.style.left);
 
 
-beam.style.left=(x+15)+"px";
+beam.style.left=(pos+15)+"px";
 
 
 
-if(x>700){
-
+if(pos>800){
 
 beam.remove();
 
 clearInterval(move);
-
 
 }
 
@@ -763,18 +840,15 @@ clearInterval(move);
 
 
 
-}
+};
+<style>
 
-
-
-</script>
-    <style>
 
 .memory{
 
 position:absolute;
 
-bottom:130px;
+bottom:120px;
 
 width:25px;
 
@@ -788,7 +862,8 @@ border:3px solid white;
 
 
 
-#finishScreen{
+
+#ending{
 
 display:none;
 
@@ -797,8 +872,6 @@ position:absolute;
 inset:0;
 
 background:#11113b;
-
-color:white;
 
 text-align:center;
 
@@ -811,18 +884,21 @@ line-height:2;
 }
 
 
+
 </style>
+
 
 
 
 
 <div class="memory" style="left:220px"></div>
 
-<div class="memory" style="left:580px"></div>
+<div class="memory" style="left:520px"></div>
 
 
 
-<div id="finishScreen">
+
+<div id="ending">
 
 
 QUEST COMPLETE
@@ -858,17 +934,11 @@ I LOVE YOU
 
 let score=0;
 
-
-let memories=0;
-
+let collected=0;
 
 
-let enemies=document.querySelectorAll(".enemyGame");
 
-
-let memoriesList=document.querySelectorAll(".memory");
-
-
+let enemies=document.querySelectorAll(".enemy");
 
 
 
@@ -886,37 +956,36 @@ document.getElementById("score").innerHTML=
 
 
 
-
-function checkCollision(){
+function collision(){
 
 
 let p=player.getBoundingClientRect();
 
 
 
-document.querySelectorAll(".obstacle,.enemyGame").forEach(obj=>{
+document.querySelectorAll(".obstacle,.enemy").forEach(function(item){
 
 
-let o=obj.getBoundingClientRect();
+let e=item.getBoundingClientRect();
 
 
 
 if(
 
-p.left < o.right &&
+p.left < e.right &&
 
-p.right > o.left &&
+p.right > e.left &&
 
-p.top < o.bottom &&
+p.top < e.bottom &&
 
-p.bottom > o.top
+p.bottom > e.top
 
 ){
 
 
-position-=40;
+x-=40;
 
-player.style.left=position+"px";
+player.style.left=x+"px";
 
 
 }
@@ -929,13 +998,12 @@ player.style.left=position+"px";
 
 
 
-
-memoriesList.forEach((m)=>{
+document.querySelectorAll(".memory").forEach(function(item){
 
 
 let a=player.getBoundingClientRect();
 
-let b=m.getBoundingClientRect();
+let b=item.getBoundingClientRect();
 
 
 
@@ -952,11 +1020,10 @@ a.bottom > b.top
 ){
 
 
-m.remove();
+item.remove();
 
 
-memories++;
-
+collected++;
 
 score+=100;
 
@@ -965,10 +1032,10 @@ updateScore();
 
 
 
-if(memories>=2){
+if(collected>=2){
 
 
-document.getElementById("finishScreen").style.display="block";
+document.getElementById("ending").style.display="block";
 
 
 }
@@ -987,48 +1054,48 @@ document.getElementById("finishScreen").style.display="block";
 
 
 
-
-setInterval(checkCollision,100);
-
+setInterval(collision,100);
 
 
 
 
 
 
-// enemy movement
 
-
-let enemyMove=0;
+// move enemies
 
 
 setInterval(()=>{
 
 
-enemies.forEach(e=>{
+enemies.forEach(function(enemy){
 
 
-let current=parseInt(e.style.left);
+let pos=parseInt(enemy.style.left);
 
 
-if(!current){
 
-current=e.offsetLeft;
+if(isNaN(pos)){
 
-}
-
-
-current-=10;
-
-
-if(current<-50){
-
-current=700;
+pos=enemy.offsetLeft;
 
 }
 
 
-e.style.left=current+"px";
+
+pos-=5;
+
+
+
+if(pos<-50){
+
+pos=850;
+
+}
+
+
+
+enemy.style.left=pos+"px";
 
 
 
@@ -1036,8 +1103,7 @@ e.style.left=current+"px";
 
 
 
-},150);
-
+},100);
 
 
 
@@ -1048,6 +1114,7 @@ e.style.left=current+"px";
 
 
 </div>
+
 
 </body>
 
