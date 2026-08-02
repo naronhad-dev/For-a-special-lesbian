@@ -13,19 +13,15 @@
 box-sizing:border-box;
 }
 
-
 body{
 
 margin:0;
-
 height:100vh;
 
-background:#050518;
+background:#05051a;
 
 display:flex;
-
 justify-content:center;
-
 align-items:center;
 
 font-family:monospace;
@@ -37,20 +33,16 @@ color:white;
 }
 
 
-
-
-
 #game{
 
 width:95%;
-
 max-width:650px;
 
 height:90vh;
 
-background:#08082a;
+background:#09092d;
 
-border:8px solid #f6d365;
+border:8px solid #ffd85c;
 
 box-shadow:8px 8px #000;
 
@@ -62,7 +54,6 @@ overflow:hidden;
 
 
 
-
 /* NIGHT SKY */
 
 .sky{
@@ -71,23 +62,13 @@ position:absolute;
 
 inset:0;
 
-background:
-
-linear-gradient(
-
+background:linear-gradient(
 #05051c,
-
-#10104a
-
+#17175a
 );
 
 }
 
-
-
-
-
-/* STARS */
 
 
 .star{
@@ -98,7 +79,7 @@ width:4px;
 
 height:4px;
 
-background:#fff;
+background:white;
 
 animation:twinkle 2s infinite;
 
@@ -110,7 +91,7 @@ animation:twinkle 2s infinite;
 
 50%{
 
-opacity:.3;
+opacity:.25;
 
 }
 
@@ -119,22 +100,20 @@ opacity:.3;
 
 
 
-
-/* MOON */
 
 .moon{
 
 position:absolute;
 
-right:45px;
+right:50px;
 
 top:40px;
 
-width:55px;
+width:60px;
 
-height:55px;
+height:60px;
 
-background:#ffeaa7;
+background:#ffe9a3;
 
 border-radius:50%;
 
@@ -142,8 +121,6 @@ border-radius:50%;
 
 
 
-
-/* PIXEL CLOUDS */
 
 
 .cloud{
@@ -154,9 +131,7 @@ width:90px;
 
 height:18px;
 
-background:#35356b;
-
-image-rendering:pixelated;
+background:#33335c;
 
 animation:cloudMove 20s linear infinite;
 
@@ -174,11 +149,11 @@ width:30px;
 
 height:20px;
 
-background:#35356b;
+background:#33335c;
 
 top:-12px;
 
-left:15px;
+left:20px;
 
 }
 
@@ -194,11 +169,11 @@ width:30px;
 
 height:20px;
 
-background:#35356b;
+background:#33335c;
 
-top:-8px;
+top:-10px;
 
-right:15px;
+right:10px;
 
 }
 
@@ -224,9 +199,6 @@ left:700px;
 
 
 
-/* MENU */
-
-
 .menu{
 
 position:relative;
@@ -244,18 +216,15 @@ padding-top:100px;
 
 .title{
 
-font-size:32px;
+font-size:34px;
 
-color:#ffd84d;
+color:#ffd83d;
 
 text-shadow:
 
 4px 4px #8b4513;
 
-line-height:1.5;
-
 }
-
 
 
 
@@ -278,18 +247,17 @@ margin-top:35px;
 
 
 
-
 .character{
 
 display:inline-block;
 
+background:#17174a;
+
+border:4px solid #777;
+
 padding:15px;
 
 margin:10px;
-
-background:#19194a;
-
-border:4px solid #777;
 
 cursor:pointer;
 
@@ -297,13 +265,11 @@ cursor:pointer;
 
 
 
+.character.selected{
 
+border-color:#ffd83d;
 
-.character.active{
-
-border-color:#ffd84d;
-
-color:#ffd84d;
+color:#ffd83d;
 
 }
 
@@ -319,8 +285,6 @@ font-size:16px;
 
 padding:15px 30px;
 
-margin-top:25px;
-
 background:#b52b2b;
 
 color:white;
@@ -331,9 +295,9 @@ box-shadow:5px 5px #000;
 
 cursor:pointer;
 
+margin-top:25px;
+
 }
-
-
 
 
 
@@ -344,8 +308,6 @@ transform:translate(4px,4px);
 box-shadow:1px 1px #000;
 
 }
-
-
 
 
 </style>
@@ -368,26 +330,22 @@ box-shadow:1px 1px #000;
 
 <div class="star" style="left:50%;top:15%"></div>
 
-<div class="star" style="left:75%;top:30%"></div>
+<div class="star" style="left:75%;top:25%"></div>
 
-<div class="star" style="left:85%;top:18%"></div>
-
+<div class="star" style="left:85%;top:10%"></div>
 
 
 <div class="moon"></div>
 
 
-
-<div class="cloud" style="top:130px"></div>
+<div class="cloud" style="top:120px"></div>
 
 <div class="cloud" style="top:220px;animation-delay:8s"></div>
 
 
 
 
-
-
-<div class="menu">
+<div class="menu" id="menu">
 
 
 <div class="title">
@@ -412,15 +370,14 @@ SAVE THE TWINSHIP
 <h3>SELECT CHARACTER</h3>
 
 
-<div class="character active" onclick="choose('Gannu')">
+<div class="character selected" onclick="selectChar('Gannu')">
 
 GANNU
 
 </div>
 
 
-
-<div class="character" onclick="choose('Dishan')">
+<div class="character" onclick="selectChar('Dishan')">
 
 DISHAN
 
@@ -446,12 +403,12 @@ START QUEST
 
 
 
-
 <audio id="music" loop>
 
 <source src="music.mp3" type="audio/mpeg">
 
 </audio>
+  
 <style>
 
 
@@ -467,13 +424,13 @@ background:
 
 linear-gradient(
 
-#07072b 0%,
+#08082b,
 
-#15155a 55%,
+#17175a 55%,
 
-#102b16 55%,
+#163d1b 55%,
 
-#071707 100%
+#08200b
 
 );
 
@@ -485,23 +442,7 @@ overflow:hidden;
 
 
 
-.gameStar{
-
-position:absolute;
-
-width:3px;
-
-height:3px;
-
-background:white;
-
-}
-
-
-
-
-
-.pixelGround{
+.ground{
 
 position:absolute;
 
@@ -515,25 +456,25 @@ background:
 
 linear-gradient(
 
-#2f8b32,
+#43a047,
 
-#17551d
+#145214
 
 );
 
-border-top:8px solid #54b946;
+border-top:8px solid #7bdc45;
 
 }
 
 
 
-.pixelGround:before{
+.ground:after{
 
 content:"";
 
 position:absolute;
 
-top:25px;
+top:35px;
 
 left:0;
 
@@ -541,13 +482,15 @@ width:100%;
 
 height:8px;
 
-background:#236c29;
+background:#246b27;
 
 }
 
 
 
-#player{
+
+
+#hero{
 
 position:absolute;
 
@@ -555,11 +498,11 @@ bottom:90px;
 
 left:80px;
 
-width:40px;
+width:42px;
 
-height:50px;
+height:55px;
 
-background:#d9a441;
+background:#e0a12b;
 
 border:4px solid black;
 
@@ -567,23 +510,24 @@ border:4px solid black;
 
 
 
-#player:before{
+#hero:before{
 
 content:"";
 
 position:absolute;
 
-top:-15px;
+top:-14px;
 
 left:8px;
 
-width:18px;
+width:20px;
 
-height:15px;
+height:14px;
 
-background:#ffd27a;
+background:#ffd38a;
 
 }
+
 
 
 
@@ -597,7 +541,7 @@ width:45px;
 
 height:45px;
 
-background:#7d1f2b;
+background:#8b2635;
 
 border:4px solid black;
 
@@ -611,17 +555,17 @@ content:"";
 
 position:absolute;
 
+top:8px;
+
+left:8px;
+
 width:8px;
 
 height:8px;
 
 background:white;
 
-left:8px;
-
-top:10px;
-
-box-shadow:20px 0 white;
+box-shadow:18px 0 white;
 
 }
 
@@ -639,7 +583,7 @@ width:45px;
 
 height:45px;
 
-background:#6b4020;
+background:#704214;
 
 border:4px solid black;
 
@@ -653,15 +597,16 @@ border:4px solid black;
 
 position:absolute;
 
-width:45px;
-
 height:8px;
+
+width:55px;
 
 background:#9fffff;
 
 border:2px solid white;
 
 }
+
 
 
 
@@ -678,19 +623,18 @@ right:10px;
 
 padding:8px;
 
-background:#000;
+background:black;
 
 border:3px solid white;
+
+z-index:5;
 
 display:flex;
 
 justify-content:space-between;
 
-z-index:5;
-
-font-size:13px;
-
 }
+
 
 
 
@@ -705,11 +649,11 @@ left:0;
 
 right:0;
 
-z-index:5;
-
 display:flex;
 
 justify-content:center;
+
+z-index:5;
 
 }
 
@@ -717,15 +661,17 @@ justify-content:center;
 
 .controls button{
 
-margin:4px;
+font-size:12px;
 
 padding:10px;
 
-font-size:12px;
+margin:4px;
 
-background:#19194a;
+background:#202050;
 
 }
+
+
 
 
 
@@ -740,9 +686,9 @@ background:#19194a;
 
 <div class="hud">
 
-<span id="life">
+<span id="lives">
 
-LIVES 3
+LIVES: 3
 
 </span>
 
@@ -760,16 +706,18 @@ STAGE 1
 
 
 
-<div class="gameStar" style="left:20%;top:20%"></div>
 
-<div class="gameStar" style="left:60%;top:15%"></div>
+<div class="star" style="left:30%;top:20%"></div>
 
-<div class="gameStar" style="left:80%;top:30%"></div>
-
+<div class="star" style="left:70%;top:30%"></div>
 
 
 
-<div id="player"></div>
+
+
+
+<div id="hero"></div>
+
 
 
 
@@ -780,15 +728,16 @@ STAGE 1
 
 
 
-<div class="block" style="left:260px"></div>
 
-<div class="block" style="left:540px"></div>
+<div class="block" style="left:250px"></div>
 
-
-
+<div class="block" style="left:560px"></div>
 
 
-<div class="pixelGround"></div>
+
+
+
+<div class="ground"></div>
 
 
 
@@ -796,44 +745,39 @@ STAGE 1
 <div class="controls">
 
 
-<button onclick="moveBack()">
+<button onclick="moveLeft()">
 
 BACK
 
 </button>
 
 
-
-<button onclick="moveForward()">
+<button onclick="moveRight()">
 
 FORWARD
 
 </button>
 
 
-
-<button onclick="jumpPlayer()">
+<button onclick="jump()">
 
 JUMP
 
 </button>
 
 
-
-<button onclick="shootBeam()">
+<button onclick="attack()">
 
 FIRE
 
 </button>
 
 
-
 </div>
 
 
 
 </div>
-
 
 
 
@@ -845,22 +789,24 @@ FIRE
 <script>
 
 
-let selected="Gannu";
+let character="Gannu";
 
 
-let px=80;
+let playerX=80;
 
 
 let jumping=false;
 
 
 
-function choose(name){
 
-selected=name;
+
+
+function selectChar(name){
+
+character=name;
 
 }
-
 
 
 
@@ -871,7 +817,7 @@ function startGame(){
 document.getElementById("music").play();
 
 
-document.querySelector(".menu").style.display="none";
+document.getElementById("menu").style.display="none";
 
 
 document.getElementById("world").style.display="block";
@@ -883,31 +829,16 @@ document.getElementById("world").style.display="block";
 
 
 
-function moveForward(){
+
+function moveRight(){
 
 
-px+=20;
+playerX+=25;
 
 
-document.getElementById("player").style.left=
+document.getElementById("hero").style.left=
 
-px+"px";
-
-
-}
-
-
-
-
-function moveBack(){
-
-
-px-=20;
-
-
-document.getElementById("player").style.left=
-
-px+"px";
+playerX+"px";
 
 
 }
@@ -916,8 +847,32 @@ px+"px";
 
 
 
+function moveLeft(){
 
-function jumpPlayer(){
+
+playerX-=25;
+
+
+if(playerX<0){
+
+playerX=0;
+
+}
+
+
+document.getElementById("hero").style.left=
+
+playerX+"px";
+
+
+}
+
+
+
+
+
+
+function jump(){
 
 
 if(jumping)return;
@@ -929,14 +884,13 @@ jumping=true;
 let h=0;
 
 
-
 let up=setInterval(()=>{
 
 
 h+=10;
 
 
-document.getElementById("player").style.bottom=
+document.getElementById("hero").style.bottom=
 
 (90+h)+"px";
 
@@ -948,17 +902,15 @@ if(h>=100){
 clearInterval(up);
 
 
-
 let down=setInterval(()=>{
 
 
 h-=10;
 
 
-document.getElementById("player").style.bottom=
+document.getElementById("hero").style.bottom=
 
 (90+h)+"px";
-
 
 
 if(h<=0){
@@ -972,6 +924,11 @@ jumping=false;
 }
 
 
+},50);
+
+
+}
+
 
 },50);
 
@@ -981,34 +938,25 @@ jumping=false;
 
 
 
-},50);
 
 
 
-}
+function attack(){
 
 
+let beam=document.createElement("div");
 
 
+beam.className="beam";
 
 
-
-function shootBeam(){
-
+beam.style.left=(playerX+45)+"px";
 
 
-let b=document.createElement("div");
+beam.style.bottom="130px";
 
 
-b.className="beam";
-
-
-b.style.left=(px+40)+"px";
-
-b.style.bottom="130px";
-
-
-document.getElementById("world").appendChild(b);
+document.getElementById("world").appendChild(beam);
 
 
 
@@ -1016,17 +964,18 @@ document.getElementById("world").appendChild(b);
 let move=setInterval(()=>{
 
 
-let x=parseInt(b.style.left);
+let x=parseInt(beam.style.left);
 
 
-b.style.left=(x+12)+"px";
+beam.style.left=(x+12)+"px";
 
 
 
 if(x>700){
 
 
-b.remove();
+beam.remove();
+
 
 clearInterval(move);
 
@@ -1034,12 +983,12 @@ clearInterval(move);
 }
 
 
-
 },30);
 
 
 
 }
+
 <style>
 
 
@@ -1055,11 +1004,13 @@ background:
 
 linear-gradient(
 
-#080820,
+#09091f,
 
-#2b092b
+#310d35
 
 );
+
+overflow:hidden;
 
 }
 
@@ -1069,15 +1020,15 @@ linear-gradient(
 
 position:absolute;
 
-bottom:100px;
-
 right:80px;
+
+bottom:100px;
 
 width:100px;
 
 height:100px;
 
-background:#5b1620;
+background:#5c1625;
 
 border:6px solid black;
 
@@ -1085,8 +1036,7 @@ border:6px solid black;
 
 
 
-
-#boss:before{
+#boss:after{
 
 content:"GANDU";
 
@@ -1094,9 +1044,43 @@ position:absolute;
 
 top:-30px;
 
+left:20px;
+
 color:white;
 
 font-size:14px;
+
+}
+
+
+
+#bossBar{
+
+position:absolute;
+
+top:30px;
+
+left:20%;
+
+width:60%;
+
+height:20px;
+
+background:#222;
+
+border:3px solid white;
+
+}
+
+
+
+#bossHP{
+
+height:100%;
+
+width:100%;
+
+background:red;
 
 }
 
@@ -1108,9 +1092,9 @@ display:none;
 
 position:absolute;
 
-bottom:100px;
+left:280px;
 
-left:300px;
+bottom:100px;
 
 width:60px;
 
@@ -1124,21 +1108,17 @@ border:5px solid black;
 
 
 
-
 #interact{
 
 display:none;
 
 position:absolute;
 
+left:270px;
+
 bottom:170px;
 
-left:260px;
-
-background:#222;
-
 }
-
 
 
 
@@ -1152,52 +1132,19 @@ inset:0;
 
 background:#050518;
 
-color:#ffd84d;
+z-index:20;
 
 text-align:center;
 
 padding-top:35vh;
 
-font-size:22px;
+font-size:24px;
+
+color:#ffd83d;
 
 line-height:2;
 
-z-index:20;
-
 }
-
-
-
-.bossBar{
-
-position:absolute;
-
-top:40px;
-
-left:20%;
-
-width:60%;
-
-height:20px;
-
-border:3px solid white;
-
-background:#333;
-
-}
-
-
-
-#bossHealth{
-
-height:100%;
-
-width:100%;
-
-background:#c52b2b;
-
-}
-
 
 
 
@@ -1207,18 +1154,21 @@ background:#c52b2b;
 
 
 
+
 <div id="bossStage">
 
 
-<div class="bossBar">
+<div id="bossBar">
 
-<div id="bossHealth"></div>
+<div id="bossHP"></div>
 
 </div>
 
 
 
+
 <div id="boss"></div>
+
 
 
 <div id="chest"></div>
@@ -1238,13 +1188,10 @@ INTERACT
 
 
 
+
 <div id="letter">
 
 QUEST COMPLETE
-
-<br><br>
-
-THE TWINSHIP WAS SAVED
 
 <br><br>
 
@@ -1260,17 +1207,21 @@ I LOVE YOU
 
 
 
+
+
 <script>
 
 
-let bossHP=100;
+let bossHealth=100;
 
 
-let bossDefeated=false;
+let defeated=false;
 
 
 
-function enterBoss(){
+
+
+function startBoss(){
 
 
 document.getElementById("world").style.display="none";
@@ -1284,27 +1235,30 @@ document.getElementById("bossStage").style.display="block";
 
 
 
-function damageBoss(){
-
-
-if(bossDefeated)return;
 
 
 
-bossHP-=20;
+function hitBoss(){
+
+
+if(defeated)return;
 
 
 
-document.getElementById("bossHealth").style.width=
-
-bossHP+"%";
+bossHealth-=20;
 
 
 
-if(bossHP<=0){
+document.getElementById("bossHP").style.width=
+
+bossHealth+"%";
 
 
-bossDefeated=true;
+
+if(bossHealth<=0){
+
+
+defeated=true;
 
 
 document.getElementById("boss").style.display="none";
@@ -1326,6 +1280,8 @@ document.getElementById("interact").style.display="block";
 
 
 
+
+
 document.getElementById("interact").onclick=function(){
 
 
@@ -1338,16 +1294,14 @@ document.getElementById("letter").style.display="block";
 
 
 
-
-// fire beam can damage boss
-
+// Clicking FIRE in boss stage damages boss
 
 document.addEventListener("click",function(e){
 
 
 if(
 
-e.target.innerHTML=="FIRE"
+e.target.innerText=="FIRE"
 
 &&
 
@@ -1356,7 +1310,7 @@ document.getElementById("bossStage").style.display=="block"
 ){
 
 
-damageBoss();
+hitBoss();
 
 
 }
@@ -1370,9 +1324,6 @@ damageBoss();
 
 
 </script>
-
-
-
 
 
 </div>
