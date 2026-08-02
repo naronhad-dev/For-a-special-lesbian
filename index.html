@@ -3,261 +3,189 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Save The Twinship</title>
+<title>PROJECT TWINSHIP</title>
 
 <style>
 
 *{
 box-sizing:border-box;
-image-rendering:pixelated;
 }
 
 body{
-
 margin:0;
 height:100vh;
-
-background:#020212;
-
+background:#020403;
 display:flex;
-justify-content:center;
 align-items:center;
-
-font-family:monospace;
-color:white;
-
+justify-content:center;
+font-family:"Courier New",monospace;
+color:#b7ffcb;
 overflow:hidden;
-
 }
 
 
-
-#game{
-
+#app{
 width:95%;
-max-width:700px;
-
+max-width:800px;
 height:90vh;
-
-background:#07072b;
-
-border:8px solid #ffd34e;
-
-box-shadow:
-0 0 0 5px black,
-0 0 40px #684cff;
-
+background:#050907;
+border:1px solid #4cff87;
+box-shadow:0 0 40px rgba(50,255,120,.15);
+padding:25px;
 position:relative;
-
 overflow:hidden;
-
 }
 
 
-
-
-
-#galaxy{
-
+#app:before{
+content:"";
 position:absolute;
 inset:0;
-
 background:
-
-linear-gradient(
-#05051b,
-#15155c
+repeating-linear-gradient(
+0deg,
+rgba(255,255,255,.03),
+rgba(255,255,255,.03) 1px,
+transparent 1px,
+transparent 5px
 );
-
+pointer-events:none;
 }
 
 
 
-
-.star{
-
-position:absolute;
-
-width:5px;
-height:5px;
-
-background:white;
-
-animation:twinkle 2s infinite;
-
-}
-
-
-
-@keyframes twinkle{
-
-50%{
-opacity:.2;
-}
-
-}
-
-
-
-
-
-.moon{
-
-position:absolute;
-
-right:50px;
-top:45px;
-
-width:70px;
-height:70px;
-
-background:#ffe7a3;
-
-border-radius:50%;
-
-}
-
-
-
-
-
-.cloud{
-
-position:absolute;
-
-height:20px;
-width:100px;
-
-background:#30305c;
-
-animation:cloudMove 18s linear infinite;
-
-}
-
-
-
-@keyframes cloudMove{
-
-from{
-left:-150px;
-}
-
-to{
-left:750px;
-}
-
-}
-
-
-
-
-
-#menu{
-
-position:absolute;
-
-top:60px;
-
-width:100%;
-
+h1{
+letter-spacing:6px;
 text-align:center;
-
-z-index:5;
-
+font-size:32px;
 }
 
 
-
-
-.title{
-
-font-size:38px;
-
-color:#ffd34e;
-
-text-shadow:
-
-4px 4px #7d277d;
-
+.center{
+text-align:center;
+margin-top:80px;
 }
-
-
-
-.subtitle{
-
-color:#aaa;
-
-margin:15px;
-
-}
-
-
-
-
-
-.character{
-
-display:inline-block;
-
-padding:20px;
-
-margin:10px;
-
-background:#11113d;
-
-border:4px solid #666;
-
-cursor:pointer;
-
-}
-
-
-
-.character.selected{
-
-border-color:#ffd34e;
-
-color:#ffd34e;
-
-}
-
-
 
 
 
 button{
-
-font-family:monospace;
-
-font-size:18px;
-
-padding:14px 25px;
-
-background:#9b3045;
-
-color:white;
-
-border:4px solid white;
-
+background:#08110b;
+border:1px solid #4cff87;
+color:#b7ffcb;
+padding:14px 30px;
+font-family:inherit;
 cursor:pointer;
+transition:.3s;
+}
 
-box-shadow:5px 5px black;
+
+button:hover{
+background:#14301d;
+transform:translateY(-2px);
+}
+
+
+
+
+.panel{
+
+border:1px solid #254d32;
+padding:15px;
+margin:15px 0;
+background:#070c08;
 
 }
 
 
 
-button:active{
+#archive,
+#final{
 
-transform:translate(4px,4px);
-
-box-shadow:1px 1px black;
+display:none;
 
 }
 
 
+
+.progress{
+
+width:100%;
+height:12px;
+border:1px solid #4cff87;
+
+}
+
+
+#bar{
+
+height:100%;
+width:0;
+background:#4cff87;
+
+}
+
+
+
+
+.photos{
+
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+
+}
+
+
+
+.photos img{
+
+width:30%;
+min-width:120px;
+border:1px solid #4cff87;
+filter:contrast(1.1);
+
+}
+
+
+
+.fade{
+
+animation:fade 1s;
+
+}
+
+
+
+@keyframes fade{
+
+from{
+opacity:0;
+}
+
+to{
+opacity:1;
+}
+
+}
+
+
+
+.cursor{
+
+animation:blink 1s infinite;
+
+}
+
+
+@keyframes blink{
+
+50%{
+opacity:0;
+}
+
+}
 
 
 </style>
@@ -268,401 +196,43 @@ box-shadow:1px 1px black;
 <body>
 
 
-<div id="game">
-
-
-<div id="galaxy"></div>
-
-
-<div class="moon"></div>
-
-
-
-<div class="star" style="left:10%;top:20%"></div>
-<div class="star" style="left:25%;top:35%"></div>
-<div class="star" style="left:50%;top:15%"></div>
-<div class="star" style="left:75%;top:25%"></div>
-<div class="star" style="left:85%;top:10%"></div>
-
-
-
-<div class="cloud" style="top:120px"></div>
-<div class="cloud" style="top:230px;animation-delay:7s"></div>
-
-
-
-
-
-
-<div id="menu">
-
-
-<div class="title">
-
-SAVE THE<br>
-TWINSHIP
-
-</div>
-
-
-<div class="subtitle">
-
-THE LOST PIXEL STAR
-
-</div>
-
-
-
-
-<h3>CHOOSE YOUR HERO</h3>
-
-
-
-<div class="character selected"
-onclick="choose('Gannu')">
-
-GANNU
-
-</div>
-
-
-
-<div class="character"
-onclick="choose('Dishan')">
-
-DISHAN
-
-</div>
-
-
-
-<br><br>
-
-
-
-<button onclick="startGame()">
-
-START QUEST
-
-</button>
-
-
-
-</div>
-
-
 
 <audio id="music" loop>
 
-<source src="music.mp3" type="audio/mpeg">
+<source src="music.mp3">
 
 </audio>
-<style>
 
-#level1{
 
-display:none;
 
-position:absolute;
+<div id="app">
 
-inset:0;
 
-background:
+<div id="boot" class="center">
 
-linear-gradient(
 
-#09092e,
+<h1>
+PROJECT TWINSHIP
+</h1>
 
-#202060 55%,
 
-#18551c 55%,
+<p>
+CLASSIFIED MEMORY ARCHIVE
+</p>
 
-#09230b
 
-);
+<p id="text">
+INITIALIZING SYSTEM...
+</p>
 
-overflow:hidden;
 
-}
 
+<br>
 
 
+<button onclick="start()">
 
-.grass{
-
-position:absolute;
-
-bottom:0;
-
-width:100%;
-
-height:90px;
-
-background:
-
-linear-gradient(
-
-#4caf50,
-
-#174d1b
-
-);
-
-border-top:8px solid #8be34b;
-
-}
-
-
-
-
-.player{
-
-position:absolute;
-
-left:80px;
-
-bottom:90px;
-
-width:45px;
-
-height:55px;
-
-background:#ffd05a;
-
-border:4px solid black;
-
-}
-
-
-
-.enemy{
-
-position:absolute;
-
-bottom:90px;
-
-width:45px;
-
-height:45px;
-
-background:#8d2440;
-
-border:4px solid black;
-
-}
-
-
-
-#enemyA{
-
-left:350px;
-
-}
-
-
-
-#enemyB{
-
-left:600px;
-
-}
-
-
-
-
-.obstacle{
-
-position:absolute;
-
-bottom:90px;
-
-width:45px;
-
-height:45px;
-
-background:#704020;
-
-border:4px solid black;
-
-}
-
-
-
-#rock1{
-
-left:250px;
-
-}
-
-
-
-#rock2{
-
-left:520px;
-
-}
-
-
-
-
-
-.hud{
-
-position:absolute;
-
-top:10px;
-
-left:10px;
-
-right:10px;
-
-background:black;
-
-border:3px solid white;
-
-padding:8px;
-
-z-index:5;
-
-display:flex;
-
-justify-content:space-between;
-
-}
-
-
-
-
-
-.controls{
-
-position:absolute;
-
-bottom:10px;
-
-width:100%;
-
-display:flex;
-
-justify-content:center;
-
-z-index:10;
-
-}
-
-
-
-.controls button{
-
-font-size:12px;
-
-padding:10px;
-
-margin:3px;
-
-background:#29295e;
-
-}
-
-
-
-.beam{
-
-position:absolute;
-
-width:60px;
-
-height:10px;
-
-background:#9fffff;
-
-border:2px solid white;
-
-}
-
-
-
-</style>
-
-
-
-
-
-<div id="level1">
-
-
-
-<div class="hud">
-
-<span id="lives">
-
-LIVES: 3
-
-</span>
-
-
-<span>
-
-STAGE 1
-
-</span>
-
-
-</div>
-
-
-
-
-<div class="player" id="hero"></div>
-
-
-
-<div class="enemy" id="enemyA"></div>
-
-<div class="enemy" id="enemyB"></div>
-
-
-
-<div class="obstacle" id="rock1"></div>
-
-<div class="obstacle" id="rock2"></div>
-
-
-
-
-<div class="grass"></div>
-
-
-
-
-
-<div class="controls">
-
-
-<button onclick="moveLeft()">
-
-LEFT
-
-</button>
-
-
-<button onclick="moveRight()">
-
-RIGHT
-
-</button>
-
-
-<button onclick="jump()">
-
-JUMP
-
-</button>
-
-
-<button onclick="attack()">
-
-STAR BEAM
+BEGIN ACCESS
 
 </button>
 
@@ -672,9 +242,106 @@ STAR BEAM
 
 
 
+
+
+<div id="archive">
+
+
+<h1>
+TWINSHIP FILE
+</h1>
+
+
+
+<div class="panel">
+
+> USER FOUND: GANNU
+
+<br>
+
+> CONNECTION: SPECIAL
+
+<br>
+
+> MEMORY STATUS: COMPLETE
+
 </div>
 
 
+
+<div class="panel">
+
+
+DECRYPTING MEMORIES
+
+
+<div class="progress">
+
+<div id="bar"></div>
+
+</div>
+
+
+</div>
+
+
+
+<div class="photos">
+
+<img src="photo1.jpg">
+
+<img src="photo2.jpg">
+
+<img src="photo3.jpg">
+
+</div>
+
+
+<br>
+
+
+<button onclick="finish()">
+
+OPEN FINAL MESSAGE
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+<div id="final" class="center">
+
+
+<h1>
+ACCESS GRANTED
+</h1>
+
+
+<p>
+
+HAPPY BIRTHDAY TWIN
+
+</p>
+
+
+<p>
+
+I LOVE YOU
+
+</p>
+
+
+</div>
+
+
+
+
+</div>
 
 
 
@@ -682,86 +349,39 @@ STAR BEAM
 <script>
 
 
-let heroName="Gannu";
+function start(){
 
 
-let playerX=80;
+document.getElementById("boot").style.display="none";
 
 
-let jumping=false;
-
-
-
-
-
-
-function choose(name){
-
-heroName=name;
-
-}
-
-
-
-
-
-
-
-function startGame(){
-
-
-document.getElementById("menu").style.display="none";
-
-
-document.getElementById("level1").style.display="block";
+document.getElementById("archive").style.display="block";
 
 
 document.getElementById("music").play();
 
 
-}
+
+let width=0;
 
 
+let timer=setInterval(()=>{
 
 
+width+=2;
 
 
-
-function moveRight(){
-
-
-playerX+=25;
+document.getElementById("bar").style.width=width+"%";
 
 
-document.getElementById("hero").style.left=
+if(width>=100){
 
-playerX+"px";
-
+clearInterval(timer);
 
 }
 
 
-
-
-
-
-
-function moveLeft(){
-
-
-playerX-=25;
-
-
-if(playerX<0){
-
-playerX=0;
-
-}
-
-
-document.getElementById("hero").style.left=
-
-playerX+"px";
+},40);
 
 
 }
@@ -770,481 +390,22 @@ playerX+"px";
 
 
 
+function finish(){
 
 
-
-function jump(){
-
-
-if(jumping)return;
+document.getElementById("archive").style.display="none";
 
 
-jumping=true;
-
-
-let h=0;
-
-
-
-let up=setInterval(()=>{
-
-
-h+=10;
-
-
-document.getElementById("hero").style.bottom=
-
-90+h+"px";
-
-
-
-if(h>=100){
-
-
-clearInterval(up);
-
-
-let down=setInterval(()=>{
-
-
-h-=10;
-
-
-document.getElementById("hero").style.bottom=
-
-90+h+"px";
-
-
-
-if(h<=0){
-
-
-clearInterval(down);
-
-jumping=false;
+document.getElementById("final").style.display="block";
 
 
 }
-
-
-},50);
-
-
-}
-
-
-},50);
-
-
-
-}
-
-
-
-
-
-
-function attack(){
-
-
-let shot=document.createElement("div");
-
-
-shot.className="beam";
-
-
-shot.style.left=
-
-(playerX+50)+"px";
-
-
-shot.style.bottom="150px";
-
-
-document.getElementById("level1").appendChild(shot);
-
-
-
-
-let fly=setInterval(()=>{
-
-
-let x=parseInt(shot.style.left);
-
-
-shot.style.left=(x+15)+"px";
-
-
-
-if(x>700){
-
-
-shot.remove();
-
-clearInterval(fly);
-
-
-}
-
-
-},30);
-
-
-
-}
-  
-<style>
-
-
-#level2{
-
-display:none;
-
-position:absolute;
-
-inset:0;
-
-background:
-
-linear-gradient(
-
-#10051f,
-
-#3b123f
-
-);
-
-}
-
-
-
-#boss{
-
-position:absolute;
-
-right:90px;
-
-bottom:120px;
-
-width:100px;
-
-height:100px;
-
-background:#641c38;
-
-border:6px solid black;
-
-}
-
-
-
-#boss:after{
-
-content:"GANDU";
-
-position:absolute;
-
-top:-30px;
-
-left:15px;
-
-color:white;
-
-}
-
-
-
-
-
-#bossBar{
-
-position:absolute;
-
-top:30px;
-
-left:15%;
-
-width:70%;
-
-height:20px;
-
-background:#222;
-
-border:3px solid white;
-
-}
-
-
-
-#hp{
-
-height:100%;
-
-width:100%;
-
-background:red;
-
-}
-
-
-
-
-
-#chest{
-
-display:none;
-
-position:absolute;
-
-left:280px;
-
-bottom:100px;
-
-width:65px;
-
-height:45px;
-
-background:#d29b32;
-
-border:5px solid black;
-
-}
-
-
-
-#interact{
-
-display:none;
-
-position:absolute;
-
-left:270px;
-
-bottom:170px;
-
-}
-
-
-
-#letter{
-
-display:none;
-
-position:absolute;
-
-inset:0;
-
-background:#050518;
-
-z-index:20;
-
-text-align:center;
-
-padding-top:35%;
-
-font-size:26px;
-
-color:#ffd34e;
-
-}
-
-
-
-</style>
-
-
-
-
-
-
-<div id="level2">
-
-
-<div id="bossBar">
-
-<div id="hp"></div>
-
-</div>
-
-
-
-<div id="boss"></div>
-
-
-
-<div id="chest"></div>
-
-
-
-<button id="interact">
-
-OPEN CHEST
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div id="letter">
-
-QUEST COMPLETE
-
-<br><br>
-
-HAPPY BIRTHDAY TWIN
-
-<br>
-
-I LOVE YOU
-
-</div>
-
-
-
-
-
-
-
-<script>
-
-
-let bossHealth=100;
-
-let defeated=false;
-
-
-
-
-
-
-
-// go to boss when player reaches castle
-
-
-setInterval(()=>{
-
-
-if(
-
-playerX>750 &&
-
-document.getElementById("level1").style.display=="block"
-
-){
-
-
-document.getElementById("level1").style.display="none";
-
-
-document.getElementById("level2").style.display="block";
-
-
-}
-
-
-
-},300);
-
-
-
-
-
-
-
-// replace attack with boss damage
-
-
-let oldAttack=attack;
-
-
-attack=function(){
-
-
-
-if(
-
-document.getElementById("level2").style.display=="block"
-
-){
-
-
-if(defeated)return;
-
-
-
-bossHealth-=20;
-
-
-
-document.getElementById("hp").style.width=
-
-bossHealth+"%";
-
-
-
-
-if(bossHealth<=0){
-
-
-defeated=true;
-
-
-document.getElementById("boss").style.display="none";
-
-
-document.getElementById("chest").style.display="block";
-
-
-document.getElementById("interact").style.display="block";
-
-
-}
-
-
-
-}
-
-else{
-
-
-oldAttack();
-
-
-}
-
-
-
-};
-
-
-
-
-
-
-
-document.getElementById("interact").onclick=function(){
-
-
-document.getElementById("letter").style.display="block";
-
-
-};
-
 
 
 
 </script>
 
 
-</div>
 
 </body>
-
 </html>
