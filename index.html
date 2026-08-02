@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Twin Quest</title>
+<title>Save The Twinship</title>
 
 <style>
 
@@ -13,36 +13,44 @@
 box-sizing:border-box;
 }
 
+
 body{
 
 margin:0;
+
 height:100vh;
 
-background:#080820;
+background:#050518;
 
 display:flex;
+
 justify-content:center;
+
 align-items:center;
 
-overflow:hidden;
-
 font-family:monospace;
+
+overflow:hidden;
 
 color:white;
 
 }
 
 
+
+
+
 #game{
 
 width:95%;
-max-width:600px;
+
+max-width:650px;
 
 height:90vh;
 
-background:#15154a;
+background:#08082a;
 
-border:8px solid #ffe7a0;
+border:8px solid #f6d365;
 
 box-shadow:8px 8px #000;
 
@@ -50,47 +58,12 @@ position:relative;
 
 overflow:hidden;
 
-text-align:center;
-
 }
 
 
 
 
-
-/* CRT EFFECT */
-
-#game::after{
-
-content:"";
-
-position:absolute;
-
-inset:0;
-
-background:
-
-repeating-linear-gradient(
-
-0deg,
-
-rgba(255,255,255,0.05),
-
-rgba(255,255,255,0.05) 2px,
-
-transparent 2px,
-
-transparent 5px
-
-);
-
-pointer-events:none;
-
-}
-
-
-
-
+/* NIGHT SKY */
 
 .sky{
 
@@ -102,9 +75,9 @@ background:
 
 linear-gradient(
 
-#14145a,
+#05051c,
 
-#07071c
+#10104a
 
 );
 
@@ -114,27 +87,30 @@ linear-gradient(
 
 
 
+/* STARS */
+
+
 .star{
 
 position:absolute;
 
-width:5px;
+width:4px;
 
-height:5px;
+height:4px;
 
-background:white;
+background:#fff;
 
-animation:blink 2s infinite;
+animation:twinkle 2s infinite;
 
 }
 
 
 
-@keyframes blink{
+@keyframes twinkle{
 
 50%{
 
-opacity:.2;
+opacity:.3;
 
 }
 
@@ -143,20 +119,22 @@ opacity:.2;
 
 
 
+
+/* MOON */
 
 .moon{
 
 position:absolute;
 
+right:45px;
+
 top:40px;
 
-right:50px;
+width:55px;
 
-width:60px;
+height:55px;
 
-height:60px;
-
-background:#fff1a8;
+background:#ffeaa7;
 
 border-radius:50%;
 
@@ -165,19 +143,22 @@ border-radius:50%;
 
 
 
+/* PIXEL CLOUDS */
 
 
 .cloud{
 
 position:absolute;
 
-width:100px;
+width:90px;
 
-height:25px;
+height:18px;
 
-background:#7777aa;
+background:#35356b;
 
-animation:moveCloud 18s linear infinite;
+image-rendering:pixelated;
+
+animation:cloudMove 20s linear infinite;
 
 }
 
@@ -189,22 +170,41 @@ content:"";
 
 position:absolute;
 
-width:35px;
+width:30px;
 
-height:25px;
+height:20px;
 
-background:#7777aa;
+background:#35356b;
 
-left:20px;
+top:-12px;
 
-top:-15px;
+left:15px;
 
 }
 
 
 
+.cloud:after{
 
-@keyframes moveCloud{
+content:"";
+
+position:absolute;
+
+width:30px;
+
+height:20px;
+
+background:#35356b;
+
+top:-8px;
+
+right:15px;
+
+}
+
+
+
+@keyframes cloudMove{
 
 from{
 
@@ -224,16 +224,29 @@ left:700px;
 
 
 
+/* MENU */
 
-.title{
+
+.menu{
 
 position:relative;
 
-margin-top:120px;
+z-index:5;
+
+text-align:center;
+
+padding-top:100px;
+
+}
+
+
+
+
+.title{
 
 font-size:32px;
 
-color:#ffd83d;
+color:#ffd84d;
 
 text-shadow:
 
@@ -246,39 +259,37 @@ line-height:1.5;
 
 
 
-
 .subtitle{
 
-position:relative;
+margin-top:15px;
 
-margin-top:20px;
-
-font-size:14px;
+color:#aaa;
 
 }
 
 
 
 
-button{
+.characters{
 
-position:relative;
+margin-top:35px;
 
-margin-top:50px;
+}
 
-padding:18px 40px;
 
-background:#b52b2b;
 
-color:white;
 
-border:5px solid white;
+.character{
 
-font-size:18px;
+display:inline-block;
 
-font-family:monospace;
+padding:15px;
 
-box-shadow:6px 6px #000;
+margin:10px;
+
+background:#19194a;
+
+border:4px solid #777;
 
 cursor:pointer;
 
@@ -286,14 +297,53 @@ cursor:pointer;
 
 
 
+
+
+.character.active{
+
+border-color:#ffd84d;
+
+color:#ffd84d;
+
+}
+
+
+
+
+
+button{
+
+font-family:monospace;
+
+font-size:16px;
+
+padding:15px 30px;
+
+margin-top:25px;
+
+background:#b52b2b;
+
+color:white;
+
+border:4px solid white;
+
+box-shadow:5px 5px #000;
+
+cursor:pointer;
+
+}
+
+
+
+
+
 button:active{
 
-transform:translate(5px,5px);
+transform:translate(4px,4px);
 
 box-shadow:1px 1px #000;
 
 }
-
 
 
 
@@ -313,46 +363,87 @@ box-shadow:1px 1px #000;
 
 
 <div class="star" style="left:10%;top:20%"></div>
+
 <div class="star" style="left:25%;top:35%"></div>
-<div class="star" style="left:45%;top:15%"></div>
-<div class="star" style="left:70%;top:25%"></div>
-<div class="star" style="left:85%;top:40%"></div>
+
+<div class="star" style="left:50%;top:15%"></div>
+
+<div class="star" style="left:75%;top:30%"></div>
+
+<div class="star" style="left:85%;top:18%"></div>
+
 
 
 <div class="moon"></div>
 
 
-<div class="cloud" style="top:150px"></div>
-<div class="cloud" style="top:240px;animation-delay:5s"></div>
+
+<div class="cloud" style="top:130px"></div>
+
+<div class="cloud" style="top:220px;animation-delay:8s"></div>
 
 
+
+
+
+
+<div class="menu">
 
 
 <div class="title">
 
-TWIN QUEST
-
-<br>
-
-LOST MEMORIES
+SAVE THE TWINSHIP
 
 </div>
-
 
 
 <div class="subtitle">
 
-A RETRO ADVENTURE
+8-BIT BIRTHDAY QUEST
 
 </div>
 
 
 
-<button id="startButton">
 
-START GAME
+<div class="characters">
+
+
+<h3>SELECT CHARACTER</h3>
+
+
+<div class="character active" onclick="choose('Gannu')">
+
+GANNU
+
+</div>
+
+
+
+<div class="character" onclick="choose('Dishan')">
+
+DISHAN
+
+</div>
+
+
+</div>
+
+
+
+
+
+<button onclick="startGame()">
+
+START QUEST
 
 </button>
+
+
+
+</div>
+
+
 
 
 
@@ -376,13 +467,13 @@ background:
 
 linear-gradient(
 
-#4b8cff 0%,
+#07072b 0%,
 
-#8ed6ff 45%,
+#15155a 55%,
 
-#55b95a 45%,
+#102b16 55%,
 
-#328035 100%
+#071707 100%
 
 );
 
@@ -394,42 +485,65 @@ overflow:hidden;
 
 
 
-.gameCloud{
+.gameStar{
 
 position:absolute;
 
-width:90px;
+width:3px;
 
-height:25px;
+height:3px;
 
 background:white;
-
-top:80px;
-
-animation:cloudMove 12s linear infinite;
 
 }
 
 
 
 
-.ground{
+
+.pixelGround{
 
 position:absolute;
 
 bottom:0;
 
-height:70px;
-
 width:100%;
 
-background:#8b5a2b;
+height:90px;
 
-border-top:6px solid #3d7a32;
+background:
+
+linear-gradient(
+
+#2f8b32,
+
+#17551d
+
+);
+
+border-top:8px solid #54b946;
 
 }
 
 
+
+.pixelGround:before{
+
+content:"";
+
+position:absolute;
+
+top:25px;
+
+left:0;
+
+width:100%;
+
+height:8px;
+
+background:#236c29;
+
+}
 
 
 
@@ -437,21 +551,39 @@ border-top:6px solid #3d7a32;
 
 position:absolute;
 
-bottom:80px;
+bottom:90px;
 
 left:80px;
 
-width:50px;
+width:40px;
 
 height:50px;
 
-background:#ffd83d;
+background:#d9a441;
 
-border:5px solid black;
+border:4px solid black;
 
 }
 
 
+
+#player:before{
+
+content:"";
+
+position:absolute;
+
+top:-15px;
+
+left:8px;
+
+width:18px;
+
+height:15px;
+
+background:#ffd27a;
+
+}
 
 
 
@@ -459,15 +591,37 @@ border:5px solid black;
 
 position:absolute;
 
-bottom:70px;
+bottom:90px;
 
 width:45px;
 
 height:45px;
 
-background:#b52b2b;
+background:#7d1f2b;
 
-border:5px solid black;
+border:4px solid black;
+
+}
+
+
+
+.enemy:before{
+
+content:"";
+
+position:absolute;
+
+width:8px;
+
+height:8px;
+
+background:white;
+
+left:8px;
+
+top:10px;
+
+box-shadow:20px 0 white;
 
 }
 
@@ -475,19 +629,19 @@ border:5px solid black;
 
 
 
-.obstacle{
+.block{
 
 position:absolute;
 
-bottom:70px;
+bottom:90px;
 
-width:50px;
+width:45px;
 
-height:50px;
+height:45px;
 
-background:#555;
+background:#6b4020;
 
-border:5px solid black;
+border:4px solid black;
 
 }
 
@@ -499,16 +653,15 @@ border:5px solid black;
 
 position:absolute;
 
-width:50px;
+width:45px;
 
-height:10px;
+height:8px;
 
-background:white;
+background:#9fffff;
 
-border:3px solid #00ffff;
+border:2px solid white;
 
 }
-
 
 
 
@@ -523,18 +676,21 @@ left:10px;
 
 right:10px;
 
-background:black;
+padding:8px;
 
-padding:10px;
+background:#000;
+
+border:3px solid white;
 
 display:flex;
 
 justify-content:space-between;
 
-font-size:14px;
+z-index:5;
+
+font-size:13px;
 
 }
-
 
 
 
@@ -549,9 +705,11 @@ left:0;
 
 right:0;
 
+z-index:5;
+
 display:flex;
 
-justify-content:space-around;
+justify-content:center;
 
 }
 
@@ -559,17 +717,13 @@ justify-content:space-around;
 
 .controls button{
 
-margin:0;
+margin:4px;
 
-padding:12px;
+padding:10px;
 
 font-size:12px;
 
-background:#222;
-
-border:3px solid white;
-
-box-shadow:3px 3px black;
+background:#19194a;
 
 }
 
@@ -581,25 +735,24 @@ box-shadow:3px 3px black;
 
 
 
-
 <div id="world">
-
 
 
 <div class="hud">
 
-<span id="score">
+<span id="life">
 
-SCORE 0000
+LIVES 3
 
 </span>
 
 
 <span>
 
-LIVES 03
+STAGE 1
 
 </span>
+
 
 </div>
 
@@ -607,7 +760,12 @@ LIVES 03
 
 
 
-<div class="gameCloud"></div>
+<div class="gameStar" style="left:20%;top:20%"></div>
+
+<div class="gameStar" style="left:60%;top:15%"></div>
+
+<div class="gameStar" style="left:80%;top:30%"></div>
+
 
 
 
@@ -615,22 +773,22 @@ LIVES 03
 
 
 
-<div class="obstacle" style="left:300px"></div>
 
-<div class="obstacle" style="left:600px"></div>
+<div class="enemy" style="left:350px"></div>
 
-
-
-
-<div class="enemy" style="left:450px"></div>
-
-<div class="enemy" style="left:750px"></div>
+<div class="enemy" style="left:650px"></div>
 
 
 
+<div class="block" style="left:260px"></div>
+
+<div class="block" style="left:540px"></div>
 
 
-<div class="ground"></div>
+
+
+
+<div class="pixelGround"></div>
 
 
 
@@ -638,39 +796,47 @@ LIVES 03
 <div class="controls">
 
 
-<button id="left">
+<button onclick="moveBack()">
 
-LEFT
+BACK
 
 </button>
 
 
-<button id="forward">
+
+<button onclick="moveForward()">
 
 FORWARD
 
 </button>
 
 
-<button id="jump">
+
+<button onclick="jumpPlayer()">
 
 JUMP
 
 </button>
 
 
-<button id="attack">
 
-ATTACK
+<button onclick="shootBeam()">
+
+FIRE
 
 </button>
 
 
+
+</div>
+
+
+
 </div>
 
 
 
-</div>
+
 
 
 
@@ -679,58 +845,79 @@ ATTACK
 <script>
 
 
-let player=document.getElementById("player");
+let selected="Gannu";
 
-let x=80;
 
-let y=80;
+let px=80;
+
 
 let jumping=false;
 
 
-document.getElementById("startButton").onclick=function(){
+
+function choose(name){
+
+selected=name;
+
+}
+
+
+
+
+
+function startGame(){
 
 
 document.getElementById("music").play();
 
 
-document.getElementById("game").style.display="none";
+document.querySelector(".menu").style.display="none";
 
 
 document.getElementById("world").style.display="block";
 
 
-};
-
-
-
-
-document.getElementById("forward").onclick=function(){
-
-x+=25;
-
-player.style.left=x+"px";
-
-};
+}
 
 
 
 
 
-document.getElementById("left").onclick=function(){
-
-x-=25;
-
-player.style.left=x+"px";
-
-};
+function moveForward(){
 
 
+px+=20;
+
+
+document.getElementById("player").style.left=
+
+px+"px";
+
+
+}
 
 
 
 
-document.getElementById("jump").onclick=function(){
+function moveBack(){
+
+
+px-=20;
+
+
+document.getElementById("player").style.left=
+
+px+"px";
+
+
+}
+
+
+
+
+
+
+function jumpPlayer(){
 
 
 if(jumping)return;
@@ -739,43 +926,59 @@ if(jumping)return;
 jumping=true;
 
 
-let up=0;
-
-
-let timer=setInterval(()=>{
-
-
-up+=10;
-
-
-player.style.bottom=(80+up)+"px";
+let h=0;
 
 
 
-if(up>=100){
+let up=setInterval(()=>{
 
 
-clearInterval(timer);
+h+=10;
+
+
+document.getElementById("player").style.bottom=
+
+(90+h)+"px";
+
+
+
+if(h>=100){
+
+
+clearInterval(up);
 
 
 
 let down=setInterval(()=>{
 
 
-up-=10;
+h-=10;
 
 
-player.style.bottom=(80+up)+"px";
+document.getElementById("player").style.bottom=
+
+(90+h)+"px";
 
 
 
-if(up<=0){
+if(h<=0){
+
 
 clearInterval(down);
 
 jumping=false;
 
+
 }
+
+
+
+},50);
+
+
+
+}
+
 
 
 },50);
@@ -786,51 +989,47 @@ jumping=false;
 
 
 
-},50);
-
-
-
-};
 
 
 
 
+function shootBeam(){
 
 
 
-document.getElementById("attack").onclick=function(){
+let b=document.createElement("div");
 
 
-let beam=document.createElement("div");
+b.className="beam";
 
 
-beam.className="beam";
+b.style.left=(px+40)+"px";
+
+b.style.bottom="130px";
 
 
-beam.style.left=(x+50)+"px";
+document.getElementById("world").appendChild(b);
 
-beam.style.bottom="120px";
-
-
-document.getElementById("world").appendChild(beam);
 
 
 
 let move=setInterval(()=>{
 
 
-let pos=parseInt(beam.style.left);
+let x=parseInt(b.style.left);
 
 
-beam.style.left=(pos+15)+"px";
+b.style.left=(x+12)+"px";
 
 
 
-if(pos>800){
+if(x>700){
 
-beam.remove();
+
+b.remove();
 
 clearInterval(move);
+
 
 }
 
@@ -840,30 +1039,11 @@ clearInterval(move);
 
 
 
-};
+}
 <style>
 
 
-.memory{
-
-position:absolute;
-
-bottom:120px;
-
-width:25px;
-
-height:25px;
-
-background:#ffd83d;
-
-border:3px solid white;
-
-}
-
-
-
-
-#ending{
+#bossStage{
 
 display:none;
 
@@ -871,7 +1051,108 @@ position:absolute;
 
 inset:0;
 
-background:#11113b;
+background:
+
+linear-gradient(
+
+#080820,
+
+#2b092b
+
+);
+
+}
+
+
+
+#boss{
+
+position:absolute;
+
+bottom:100px;
+
+right:80px;
+
+width:100px;
+
+height:100px;
+
+background:#5b1620;
+
+border:6px solid black;
+
+}
+
+
+
+
+#boss:before{
+
+content:"GANDU";
+
+position:absolute;
+
+top:-30px;
+
+color:white;
+
+font-size:14px;
+
+}
+
+
+
+#chest{
+
+display:none;
+
+position:absolute;
+
+bottom:100px;
+
+left:300px;
+
+width:60px;
+
+height:45px;
+
+background:#c58a2b;
+
+border:5px solid black;
+
+}
+
+
+
+
+#interact{
+
+display:none;
+
+position:absolute;
+
+bottom:170px;
+
+left:260px;
+
+background:#222;
+
+}
+
+
+
+
+#letter{
+
+display:none;
+
+position:absolute;
+
+inset:0;
+
+background:#050518;
+
+color:#ffd84d;
 
 text-align:center;
 
@@ -881,7 +1162,42 @@ font-size:22px;
 
 line-height:2;
 
+z-index:20;
+
 }
+
+
+
+.bossBar{
+
+position:absolute;
+
+top:40px;
+
+left:20%;
+
+width:60%;
+
+height:20px;
+
+border:3px solid white;
+
+background:#333;
+
+}
+
+
+
+#bossHealth{
+
+height:100%;
+
+width:100%;
+
+background:#c52b2b;
+
+}
+
 
 
 
@@ -891,39 +1207,54 @@ line-height:2;
 
 
 
-<div class="memory" style="left:220px"></div>
-
-<div class="memory" style="left:520px"></div>
+<div id="bossStage">
 
 
+<div class="bossBar">
+
+<div id="bossHealth"></div>
+
+</div>
 
 
-<div id="ending">
+
+<div id="boss"></div>
 
 
-QUEST COMPLETE
+<div id="chest"></div>
 
 
-<br><br>
 
+<button id="interact">
 
-ALL MEMORIES RESTORED
+INTERACT
 
+</button>
 
-<br><br>
-
-
-HAPPY BIRTHDAY TWIN
-
-
-<br>
-
-
-I LOVE YOU
 
 
 </div>
 
+
+
+
+<div id="letter">
+
+QUEST COMPLETE
+
+<br><br>
+
+THE TWINSHIP WAS SAVED
+
+<br><br>
+
+HAPPY BIRTHDAY TWIN
+
+<br>
+
+I LOVE YOU
+
+</div>
 
 
 
@@ -932,22 +1263,61 @@ I LOVE YOU
 <script>
 
 
-let score=0;
-
-let collected=0;
+let bossHP=100;
 
 
-
-let enemies=document.querySelectorAll(".enemy");
+let bossDefeated=false;
 
 
 
-function updateScore(){
+function enterBoss(){
 
 
-document.getElementById("score").innerHTML=
+document.getElementById("world").style.display="none";
 
-"SCORE "+score.toString().padStart(4,"0");
+
+document.getElementById("bossStage").style.display="block";
+
+
+}
+
+
+
+
+function damageBoss(){
+
+
+if(bossDefeated)return;
+
+
+
+bossHP-=20;
+
+
+
+document.getElementById("bossHealth").style.width=
+
+bossHP+"%";
+
+
+
+if(bossHP<=0){
+
+
+bossDefeated=true;
+
+
+document.getElementById("boss").style.display="none";
+
+
+document.getElementById("chest").style.display="block";
+
+
+document.getElementById("interact").style.display="block";
+
+
+}
+
 
 
 }
@@ -956,36 +1326,37 @@ document.getElementById("score").innerHTML=
 
 
 
-function collision(){
+document.getElementById("interact").onclick=function(){
 
 
-let p=player.getBoundingClientRect();
+document.getElementById("letter").style.display="block";
+
+
+};
 
 
 
-document.querySelectorAll(".obstacle,.enemy").forEach(function(item){
 
 
-let e=item.getBoundingClientRect();
 
+// fire beam can damage boss
+
+
+document.addEventListener("click",function(e){
 
 
 if(
 
-p.left < e.right &&
+e.target.innerHTML=="FIRE"
 
-p.right > e.left &&
+&&
 
-p.top < e.bottom &&
-
-p.bottom > e.top
+document.getElementById("bossStage").style.display=="block"
 
 ){
 
 
-x-=40;
-
-player.style.left=x+"px";
+damageBoss();
 
 
 }
@@ -993,123 +1364,14 @@ player.style.left=x+"px";
 
 
 });
-
-
-
-
-
-document.querySelectorAll(".memory").forEach(function(item){
-
-
-let a=player.getBoundingClientRect();
-
-let b=item.getBoundingClientRect();
-
-
-
-if(
-
-a.left < b.right &&
-
-a.right > b.left &&
-
-a.top < b.bottom &&
-
-a.bottom > b.top
-
-){
-
-
-item.remove();
-
-
-collected++;
-
-score+=100;
-
-
-updateScore();
-
-
-
-if(collected>=2){
-
-
-document.getElementById("ending").style.display="block";
-
-
-}
-
-
-
-}
-
-
-
-});
-
-
-
-}
-
-
-
-setInterval(collision,100);
-
-
-
-
-
-
-
-// move enemies
-
-
-setInterval(()=>{
-
-
-enemies.forEach(function(enemy){
-
-
-let pos=parseInt(enemy.style.left);
-
-
-
-if(isNaN(pos)){
-
-pos=enemy.offsetLeft;
-
-}
-
-
-
-pos-=5;
-
-
-
-if(pos<-50){
-
-pos=850;
-
-}
-
-
-
-enemy.style.left=pos+"px";
-
-
-
-});
-
-
-
-},100);
 
 
 
 
 
 </script>
+
+
 
 
 
