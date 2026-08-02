@@ -3,82 +3,117 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Birthday Protocol</title>
 
 <style>
-body {
-    margin: 0;
-    background: black;
-    color: #00ff66;
-    font-family: "Courier New", monospace;
-    text-align: center;
-    overflow: hidden;
+
+*{
+    box-sizing:border-box;
 }
 
-#terminal {
-    margin-top: 15vh;
-    font-size: 22px;
-    padding: 20px;
+body{
+    margin:0;
+    background:black;
+    color:#00ff66;
+    font-family:"Courier New",monospace;
+    text-align:center;
+    overflow:hidden;
 }
 
-button {
-    background: #00ff66;
-    color: black;
-    border: none;
-    padding: 15px 25px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 5px;
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-1;
 }
 
-button:hover {
-    background: white;
+#terminal{
+    margin-top:12vh;
+    font-size:22px;
+    padding:20px;
+    text-shadow:0 0 10px #00ff66;
 }
 
-#photo {
-    display: none;
-    width: 300px;
-    max-width: 85%;
-    border-radius: 20px;
-    margin-top: 20px;
-    animation: glitch 0.4s infinite;
-    box-shadow: 0 0 25px #00ff66;
+button{
+    background:transparent;
+    color:#00ff66;
+    border:2px solid #00ff66;
+    padding:15px 30px;
+    font-size:18px;
+    font-family:monospace;
+    cursor:pointer;
+    box-shadow:0 0 20px #00ff66;
 }
 
-.glitch {
-    animation: shake 0.3s infinite;
+button:hover{
+    background:#00ff66;
+    color:black;
 }
 
-@keyframes glitch {
-    0% {
-        transform: translate(0);
+#photo{
+    display:none;
+    width:300px;
+    max-width:85%;
+    border-radius:20px;
+    margin-top:20px;
+    box-shadow:0 0 40px #00ff66;
+    animation:reveal 2s;
+}
+
+@keyframes reveal{
+    from{
+        opacity:0;
+        transform:scale(.2) rotate(20deg);
+        filter:blur(20px);
     }
-    25% {
-        transform: translate(8px,-4px);
-    }
-    50% {
-        transform: translate(-8px,4px);
-    }
-    100% {
-        transform: translate(0);
+
+    to{
+        opacity:1;
+        transform:scale(1);
+        filter:blur(0);
     }
 }
 
-@keyframes shake {
-    0% {filter:hue-rotate(0deg);}
-    50% {filter:hue-rotate(90deg);}
-    100% {filter:hue-rotate(0deg);}
+
+.glitch{
+    animation:glitch .2s infinite;
 }
+
+
+@keyframes glitch{
+
+    0%{
+        transform:translate(5px);
+        filter:hue-rotate(90deg);
+    }
+
+    50%{
+        transform:translate(-5px);
+        filter:hue-rotate(180deg);
+    }
+
+    100%{
+        transform:translate(0);
+    }
+
+}
+
 </style>
 
 </head>
 
+
 <body>
+
+
+<canvas id="matrix"></canvas>
+
 
 <audio id="music" loop>
     <source src="music.mp3" type="audio/mpeg">
 </audio>
+
 
 <div id="terminal">
 
@@ -91,58 +126,141 @@ button:hover {
 </div>
 
 
+
 <script>
 
-function start(){
 
-    document.getElementById("music").play();
+// MATRIX EFFECT
 
-    let text = document.getElementById("text");
+let canvas=document.getElementById("matrix");
+let ctx=canvas.getContext("2d");
 
-    let lines = [
-        "BOOTING SYSTEM...",
-        "SCANNING DATABASE...",
-        "SEARCHING SUBJECT...",
-        "FACE RECOGNITION IN PROGRESS...",
-        "",
-        "✓ SUBJECT FOUND",
-        "",
-        "NAME: GANDU",
-        "STATUS: BEST TWIN"
-    ];
+canvas.height=window.innerHeight;
+canvas.width=window.innerWidth;
 
-    let i = 0;
+let letters="01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+letters=letters.split("");
 
-    let scan = setInterval(function(){
+let fontSize=16;
+let columns=canvas.width/fontSize;
 
-        text.innerHTML += lines[i] + "<br>";
+let drops=[];
 
-        i++;
+for(let i=0;i<columns;i++){
+    drops[i]=1;
+}
 
-        if(i >= lines.length){
 
-            clearInterval(scan);
+function drawMatrix(){
 
-            setTimeout(function(){
+    ctx.fillStyle="rgba(0,0,0,0.08)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
 
-                document.body.classList.add("glitch");
+    ctx.fillStyle="#00ff66";
+    ctx.font=fontSize+"px monospace";
 
-                text.innerHTML += 
-                "<br>⚠ GLITCH TRANSITION ⚠<br><br>" +
-                "🐺 SYSTEM VOICE DETECTED...<br><br>" +
-                "Luv you twin ❤️";
 
-                document.getElementById("photo").style.display = "inline-block";
+    for(let i=0;i<drops.length;i++){
 
-            },1500);
+        let text=letters[Math.floor(Math.random()*letters.length)];
 
+        ctx.fillText(
+            text,
+            i*fontSize,
+            drops[i]*fontSize
+        );
+
+
+        if(drops[i]*fontSize > canvas.height && Math.random()>0.975){
+            drops[i]=0;
         }
 
-    },800);
+        drops[i]++;
+    }
 
 }
 
+setInterval(drawMatrix,35);
+
+
+
+
+
+// SCAN SYSTEM
+
+
+function start(){
+
+
+document.getElementById("music").play();
+
+
+let text=document.getElementById("text");
+
+
+let lines=[
+
+"BOOTING SYSTEM...",
+"CONNECTING DATABASE...",
+"SCANNING SUBJECT...",
+"FACE RECOGNITION ACTIVE...",
+"",
+"✓ SUBJECT FOUND",
+"",
+"NAME: GANDU",
+"STATUS: BEST TWIN"
+
+];
+
+
+let i=0;
+
+
+let scan=setInterval(()=>{
+
+
+text.innerHTML += lines[i]+"<br>";
+
+i++;
+
+
+if(i>=lines.length){
+
+
+clearInterval(scan);
+
+
+setTimeout(()=>{
+
+
+document.body.classList.add("glitch");
+
+
+text.innerHTML +=
+"<br>⚠ GLITCH TRANSITION ⚠<br><br>"+
+"🐺 SYSTEM VOICE DETECTED...<br><br>"+
+"Luv you twin ❤️";
+
+
+document.getElementById("photo").style.display="inline-block";
+
+
+},1500);
+
+
+}
+
+
+},800);
+
+
+
+}
+
+
 </script>
 
-</body>
+
+</body) 
 </html>
+
